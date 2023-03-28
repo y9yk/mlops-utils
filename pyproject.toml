@@ -1,0 +1,23 @@
+[tool.poetry]
+authors = ["y9yk <andrew.yk82@gmail.com>"]
+description = ""
+name = "mlops-utils"
+packages = [{include = "modules"}]
+readme = "README.md"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+fastapi = "0.93.0"
+google-cloud-secret-manager = "^2.16.0"
+google-cloud-storage = "^2.7.0"
+mlflow = "^2.1.1"
+python = "^3.8"
+
+[tool.poetry.group.dev.dependencies]
+black = {version = "^23.1a1", allow-prereleases = true}
+pylint = "^2.15.9"
+pytest = "^7.2.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
