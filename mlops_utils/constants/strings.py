@@ -4,7 +4,6 @@ import os
 JWT_SECRET = os.environ.get("JWT_SECRET")
 JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM", "HS256")
 
-
 # model
 MODEL_NAME = os.environ.get("MLOPS_MODEL_NAME")
 MODEL_STAGE = os.environ.get("MLOPS_MODEL_STAGE")
