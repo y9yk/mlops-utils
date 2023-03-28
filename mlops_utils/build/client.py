@@ -1,27 +1,32 @@
-from shell import Shell
+from shell import shell
 
 
-def get_gcp_project(verbose: bool = False):
+def run_script(command: str):
+    sh = shell(command)
+    errors = sh.errors()
+    try:
+        assert len(errors) > 0
+        return sh.output()
+    except:
+        raise Exception(errors)
+
+
+def get_gcp_project():
     command = "gcloud config get-value project"
-    sh = Shell(die=True, verbose=verbose)
-    return sh.run(command).output()
+    return run_script(command)
 
 
-def bentoml_build(model_name: str, verbose: bool = False):
+def bentoml_build(model_name: str):
     build_context = f"modules/services/{model_name}"
     config_file_path = f"{build_context}/bentofile.yaml"
-
-    sh = Shell(die=True, verbose=verbose)
-    sh.run(f"bentoml build -f {config_file_path} {build_context}")
+    run_script(f"bentoml build -f {config_file_path} {build_context}")
 
 
 def bentoml_containerize(
     model_name: str,
     git_access_token: str,
-    verbose: bool = False,
 ):
-    sh = Shell(die=True, verbose=verbose)
-    sh.run(
+    run_script(
         f"bentoml containerize {model_name} \
             --opt build-arg=GIT_ACCESS_TOKEN={git_access_token} \
             --opt progress=auto"
@@ -32,23 +37,19 @@ def docker_tag_to_image(
     model_name: str,
     model_tag: str,
     gcp_project: str,
-    verbose: bool = False,
 ):
     model_image_name = f"gcr.io/{gcp_project}/{model_name}:{model_tag}"
-    sh = Shell(die=True, verbose=verbose)
-    sh.run(f"docker tag {model_name} {model_image_name}")
+    run_script(f"docker tag {model_name} {model_image_name}")
 
 
 def docker_push_to_gcr(
     model_name: str,
     model_tag: str,
     gcp_project: str,
-    verbose: bool = False,
 ):
     # gcloud auth configure-docker
     model_image_name = f"gcr.io/{gcp_project}/{model_name}:{model_tag}"
-    sh = Shell(die=True, verbose=verbose)
-    sh.run(f"docker push {model_image_name}")
+    run_script(f"docker push {model_image_name}")
 
 
 def deploy_to_cloud_run(
@@ -63,7 +64,6 @@ def deploy_to_cloud_run(
     gcp_service_max_instances: int = 100,
     gcp_service_concurrency: int = 80,
     gcp_service_timeout: int = 300,
-    verbose: bool = False,
 ):
     model_image_name = f"gcr.io/{gcp_project}/{model_name}:{model_tag}"
     command = f"gcloud run deploy {gcp_project} \
@@ -79,5 +79,4 @@ def deploy_to_cloud_run(
                 --execution-environment gen1 \
                 --concurrency {gcp_service_concurrency} \
                 --timeout {gcp_service_timeout}"
-    sh = Shell(die=True, verbose=verbose)
-    sh.run(command)
+    run_script(command)
