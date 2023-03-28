@@ -8,7 +8,7 @@ def get_gcp_project(verbose: bool = False):
 
 
 def bentoml_build(model_name: str, verbose: bool = False):
-    build_context = f"services/{model_name}"
+    build_context = f"modules/services/{model_name}"
     config_file_path = f"{build_context}/bentofile.yaml"
 
     sh = Shell(die=True, verbose=verbose)
