@@ -2,7 +2,7 @@
 authors = ["y9yk <andrew.yk82@gmail.com>"]
 description = ""
 name = "mlops-utils"
-packages = [{include = "modules"}]
+packages = [{include = "mlops_utils"}]
 readme = "README.md"
 version = "0.1.0"
 
