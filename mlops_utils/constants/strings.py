@@ -6,7 +6,7 @@ JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM", "HS256")
 
 # model
 MODEL_NAME = os.environ.get("MLOPS_MODEL_NAME")
-MODEL_STAGE = os.environ.get("MLOPS_MODEL_STAGE")
+MODEL_STAGE = os.environ.get("MLOPS_MODEL_STAGE", "latest")
 
 # exception messages
 INVALID_TOKEN_OR_EXPIRED_TOKEN = "invalid token or expired"
