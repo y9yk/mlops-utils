@@ -5,7 +5,7 @@ def run_script(command: str):
     sh = shell(command)
     errors = sh.errors()
     try:
-        assert len(errors) > 0
+        assert len(errors) == 0
         return sh.output()
     except:
         raise Exception(errors)
