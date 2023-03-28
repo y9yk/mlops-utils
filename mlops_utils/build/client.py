@@ -6,14 +6,10 @@ def run_script(command: str):
     errors = sh.errors()
     try:
         assert len(errors) == 0
-        return sh.output()
+        for line in sh.output():
+            print(line)
     except:
         raise Exception(errors)
-
-
-def get_gcp_project():
-    command = "gcloud config get-value project"
-    return run_script(command)
 
 
 def bentoml_build(model_name: str):
