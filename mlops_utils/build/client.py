@@ -1,6 +1,12 @@
 from shell import Shell
 
 
+def get_gcp_project(verbose: bool = False):
+    command = "gcloud config get-value project"
+    sh = Shell(die=True, verbose=verbose)
+    return sh.run(command).output()
+
+
 def bentoml_build(model_name: str, verbose: bool = False):
     build_context = f"services/{model_name}"
     config_file_path = f"{build_context}/bentofile.yaml"
