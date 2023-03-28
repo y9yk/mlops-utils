@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from middlewares import *
-from exceptions import *
+from mlops_utils.server.middlewares import *
+from mlops_utils.server.exceptions import *
 
 
 def get_application() -> FastAPI:

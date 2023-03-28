@@ -5,7 +5,7 @@ from fastapi import Request, HTTPException
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import Response
 
-from constants.strings import *
+from mlops_utils.constants.strings import *
 
 
 class AuthCheckerMiddleware(BaseHTTPMiddleware):

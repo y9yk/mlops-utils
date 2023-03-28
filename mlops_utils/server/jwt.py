@@ -4,7 +4,7 @@ import time
 from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from constants.strings import *
+from mlops_utils.constants.strings import *
 
 
 def decodeJWT(token: str) -> dict:
