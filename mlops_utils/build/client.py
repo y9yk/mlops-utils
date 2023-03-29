@@ -18,24 +18,22 @@ def run_script(command: str):
     # process
     proc = subprocess.Popen(
         command,
-        stderr=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         stdout=subprocess.PIPE,
         shell=True,
     )
-    errors = []
     while True:
         output = proc.stdout.readline()
-        error = proc.stderr.readline()
         # show progress
-        if error:
-            errors.append(error.strip().decode("UTF8"))
         if output:
             print(output.strip().decode("UTF8"))
         # break
-        if proc.poll() == 0:
-            break
-        else:
-            raise Exception("\n".join(errors))
+        code = proc.poll()
+        if code is not None:
+            if code == 0:
+                break
+            else:
+                raise Exception(command)
 
 
 def bentoml_build(model_name: str):
