@@ -17,7 +17,7 @@ class AuthCheckerMiddleware(BaseHTTPMiddleware):
         app: ASGIApp,
         routes: typing.Sequence[str] = (),
     ) -> None:
-        self.app = app
+        super(AuthCheckerMiddleware, self).__init__(app, self.dispatch)
         self.routes = routes
 
     async def dispatch(
