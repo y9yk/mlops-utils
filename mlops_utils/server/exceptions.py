@@ -13,7 +13,7 @@ class Exception(BaseModel):
 
 # Custom Exception (using BentoMLException, 401)
 class UnAuthorizedException(BentoMLException):
-    error_code = HTTPStatus.UNAUTHORIZED
+    error_code = HTTPStatus.NOT_ACCEPTABLE
 
 
 async def http_error_handler(_: Request, exc: HTTPException) -> JSONResponse:
