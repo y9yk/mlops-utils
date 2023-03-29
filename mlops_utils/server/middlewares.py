@@ -5,14 +5,14 @@ import typing
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import Response
 from starlette.types import ASGIApp
+from http import HTTPStatus
 
 from mlops_utils.constants.strings import *
 from mlops_utils.server.exceptions import *
 
 
-class UnAuthorizedException(BaseModel):
-    status: int
-    message: str
+class UnAuthorizedException(Exception):
+    status = HTTPStatus.UNAUTHORIZED
 
 
 class AuthCheckerMiddleware(BaseHTTPMiddleware):
@@ -46,8 +46,7 @@ class AuthCheckerMiddleware(BaseHTTPMiddleware):
             except:
                 return JSONResponse(
                     content=jsonable_encoder(
-                        Exception(
-                            status=401,
+                        UnAuthorizedException(
                             message=AUTHENTICATION_REQUIRED,
                         ),
                     ),
