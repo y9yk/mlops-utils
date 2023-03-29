@@ -9,7 +9,7 @@ from mlops_utils.constants.strings import *
 
 
 class AuthCheckerMiddleware(BaseHTTPMiddleware):
-    async def dispath(
+    async def dispatch(
         self, request: Request, call_next: RequestResponseEndpoint
     ) -> Response:
         try:
