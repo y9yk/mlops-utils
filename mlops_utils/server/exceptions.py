@@ -3,10 +3,17 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from starlette.requests import Request
 from starlette.responses import JSONResponse
+from bentoml.exceptions import BentoMLException
+from http import HTTPStatus
 
 
 class Exception(BaseModel):
     message: str
+
+
+# Custom Exception (using BentoMLException, 401)
+class UnAuthorizedException(BentoMLException):
+    error_code = HTTPStatus.UNAUTHORIZED
 
 
 async def http_error_handler(_: Request, exc: HTTPException) -> JSONResponse:
