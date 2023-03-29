@@ -46,10 +46,12 @@ def bentoml_containerize(
     model_name: str,
     model_tag: str,
     git_access_token: str,
+    jwt_secret: str,
 ):
     run_script(
         f"bentoml containerize {model_name}:{model_tag} \
             --opt build-arg=GIT_ACCESS_TOKEN={git_access_token} \
+            --opt build-arg=ARG_JWT_SECRET={jwt_secret} \
             --opt progress=plain"
     )
 
