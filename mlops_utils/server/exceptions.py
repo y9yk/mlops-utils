@@ -3,8 +3,6 @@ from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from bentoml.exceptions import BentoMLException
-from http import HTTPStatus
 
 
 class Exception(BaseModel):
