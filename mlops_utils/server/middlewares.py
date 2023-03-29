@@ -2,13 +2,17 @@ import jwt
 import time
 import typing
 
-# from fastapi import Request, HTTPException
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import Response
 from starlette.types import ASGIApp
 
 from mlops_utils.constants.strings import *
 from mlops_utils.server.exceptions import *
+
+
+class UnAuthorizedException(BaseModel):
+    status: int
+    message: str
 
 
 class AuthCheckerMiddleware(BaseHTTPMiddleware):
@@ -40,9 +44,13 @@ class AuthCheckerMiddleware(BaseHTTPMiddleware):
                 # return response
                 return await call_next(request)
             except:
-                return Response(
-                    content={"status": 401, "message": "Unauthorized"},
-                    media_type="application/json",
+                return JSONResponse(
+                    content=jsonable_encoder(
+                        Exception(
+                            status=401,
+                            message=AUTHENTICATION_REQUIRED,
+                        ),
+                    ),
                 )
         else:
             return await call_next(request)
