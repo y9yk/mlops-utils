@@ -40,8 +40,9 @@ class AuthCheckerMiddleware(BaseHTTPMiddleware):
                 # return response
                 return await call_next(request)
             except:
-                raise UnAuthorizedException(
-                    message=AUTHENTICATION_REQUIRED,
+                return Response(
+                    content={"status": 401, "message": "Unauthorized"},
+                    media_type="application/json",
                 )
         else:
             return await call_next(request)
