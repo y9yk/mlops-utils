@@ -1,15 +1,41 @@
-from shell import shell
+import subprocess
+
+
+# @deprecated
+# def run_script(command: str):
+#     sh = shell(command)
+#     for line in sh.output():
+#         print(line)
+#     if sh.code != 0:
+#         raise Exception(sh.errors)
 
 
 def run_script(command: str):
-    sh = shell(command)
-    errors = sh.errors()
-    try:
-        assert len(errors) == 0
-        for line in sh.output():
-            print(line)
-    except:
-        raise Exception(errors)
+    # debug command
+    print("-" * 20)
+    print(command)
+    print("-" * 20)
+    # process
+    proc = subprocess.Popen(
+        command,
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        shell=True,
+    )
+    errors = []
+    while True:
+        output = proc.stdout.readline()
+        error = proc.stderr.readline()
+        # show progress
+        if error:
+            errors.append(error.strip().decode("UTF8"))
+        if output:
+            print(output.strip().decode("UTF8"))
+        # break
+        if proc.poll() == 0:
+            break
+        else:
+            raise Exception("\n".join(errors))
 
 
 def bentoml_build(model_name: str):
@@ -20,12 +46,13 @@ def bentoml_build(model_name: str):
 
 def bentoml_containerize(
     model_name: str,
+    model_tag: str,
     git_access_token: str,
 ):
     run_script(
-        f"bentoml containerize {model_name} \
+        f"bentoml containerize {model_name}:{model_tag} \
             --opt build-arg=GIT_ACCESS_TOKEN={git_access_token} \
-            --opt progress=auto"
+            --opt progress=plain"
     )
 
 
@@ -35,7 +62,7 @@ def docker_tag_to_image(
     gcp_project: str,
 ):
     model_image_name = f"gcr.io/{gcp_project}/{model_name}:{model_tag}"
-    run_script(f"docker tag {model_name} {model_image_name}")
+    run_script(f"docker tag {model_name}:{model_tag} {model_image_name}")
 
 
 def docker_push_to_gcr(
