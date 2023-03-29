@@ -87,17 +87,16 @@ def deploy_to_cloud_run(
     gcp_service_timeout: int = 300,
 ):
     model_image_name = f"gcr.io/{gcp_project}/{model_name}:{model_tag}"
-    command = f"gcloud run deploy {gcp_project} \
+    command = f"gcloud run deploy {model_name} \
+                --platform managed \
                 --image {model_image_name} \
                 --region {gcp_region} \
                 --port {gcp_service_port} \
                 --allow-unauthenticated \
-                --no-cpu-throttling \
                 --cpu {gcp_service_cpu_amount} \
                 --memory {gcp_service_mem_amount} \
                 --min-instances {gcp_service_min_instances} \
                 --max-instances {gcp_service_max_instances} \
-                --execution-environment gen1 \
                 --concurrency {gcp_service_concurrency} \
                 --timeout {gcp_service_timeout}"
     run_script(command)
