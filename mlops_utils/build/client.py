@@ -1,15 +1,6 @@
 import subprocess
 
 
-# @deprecated
-# def run_script(command: str):
-#     sh = shell(command)
-#     for line in sh.output():
-#         print(line)
-#     if sh.code != 0:
-#         raise Exception(sh.errors)
-
-
 def run_script(command: str):
     # debug command
     print("-" * 20)
@@ -45,13 +36,11 @@ def bentoml_build(model_name: str):
 def bentoml_containerize(
     model_name: str,
     model_tag: str,
-    git_access_token: str,
-    jwt_secret: str,
+    git_access_token: str = None,
 ):
     run_script(
         f"bentoml containerize {model_name}:{model_tag} \
             --opt build-arg=GIT_ACCESS_TOKEN={git_access_token} \
-            --opt build-arg=ARG_JWT_SECRET={jwt_secret} \
             --opt progress=plain"
     )
 
