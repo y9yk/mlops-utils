@@ -43,24 +43,24 @@ mlops-utils @ git+ssh://git@github.com/y9yk/mlops-utils.git@develop
 ### Get model from MLflow and pack using BentoML
 
 MLflow에 위치한 모델을 로드하고, BentoML을 이용해서 packing하는 예제는 아래와 같습니다.
-- [get_model_from_mlflow_and_pack](/examples/get_model_from_mlflow_and_pack.md)
+- [get_model_from_mlflow_and_pack](./mlops_utils/examples/get_model_from_mlflow_and_pack.md)
 
 ### BentoML Build and Containerization
 
 Packing된 모델을 BentoML을 이용해서 빌드, 컨테이너화하는 예제는 아래와 같습니다.
-- [bentoml_build_and_containerize](/examples/bentoml_build_and_containerize.md)
+- [bentoml_build_and_containerize](./mlops_utils/examples/bentoml_build_and_containerize.md)
 
 ### Docker Tag and Push to GCR
 
 BentoML을 토대로 생성된 이미지를 Google Cloud Registry에 푸시하는 예제는 아래와 같습니다.
-- [docker_tag_and_push_to_gcr](/examples/docker_tag_and_push_to_gcr.md)
+- [docker_tag_and_push_to_gcr](./mlops_utils/examples/docker_tag_and_push_to_gcr.md)
 
 ### Deploy to Google Cloud Run
 
 BentoML로 생성된 모델 서빙 이미지가 Google Cloud Run에 배포되는 예제는 아래와 같습니다.
-- [deploy_to_cloud_run](/examples/deploy_to_cloud_run.md)
+- [deploy_to_cloud_run](./mlops_utils/examples/deploy_to_cloud_run.md)
 
 ### Get Secret Str using Google Secret Manager
 
 Google Secret Manager를 통해서 관리되는 정보를 가져올 수 있는 예제는 아래와 같습니다.
-- [get_secret_str](/examples/get_secret_str.md)
+- [get_secret_str](./mlops_utils/examples/get_secret_str.md)
