@@ -27,9 +27,13 @@ def run_script(command: str):
                 raise Exception(command)
 
 
-def bentoml_build(model_name: str):
-    build_context = f"modules/services/{model_name}"
-    config_file_path = f"{build_context}/bentofile.yaml"
+def bentoml_build(
+    model_name: str,
+    config_file_path: str = None,
+    build_context: str = None,
+):
+    build_context = build_context | f"modules/services/{model_name}"
+    config_file_path = config_file_path | f"{build_context}/bentofile.yaml"
     run_script(f"bentoml build -f {config_file_path} {build_context}")
 
 
